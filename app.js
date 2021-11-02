@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   console.log(`Ошибка: ${res.message}`);
 });
 
-
+app.use('/users', require('./routes/users'));
 
 
 // Слушаем 3000 порт
