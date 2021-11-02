@@ -1,10 +1,16 @@
+/* eslint-disable no-console */
 const express = require('express');
+// eslint-disable-next-line no-unused-vars
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const auth = require('./middlewares/auth');
+const checkErrors = require('./middlewares/check-errors');
+
+const { login, createUser } = require('./controllers/users');
 
 const app = express();
 
@@ -21,8 +27,29 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   console.log(`Ошибка: ${res.message}`);
 });
 
-app.use('/users', require('./routes/users'));
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), login);
 
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+    name: Joi.string().required().min(2).max(30),
+  }),
+}), createUser);
+
+app.use(auth);
+
+app.use('/users', require('./routes/users'));
+app.use('/movies', require('./routes/movies'));
+
+app.use(errors());
+
+app.use(checkErrors);
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
