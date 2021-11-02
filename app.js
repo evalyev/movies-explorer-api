@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 const checkErrors = require('./middlewares/check-errors');
+const { requestLogger, errorLogger } = require('./middlewares/logger'); 
 
 const { login, createUser } = require('./controllers/users');
 
@@ -26,6 +27,8 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 }).catch((res) => {
   console.log(`Ошибка: ${res.message}`);
 });
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -46,6 +49,8 @@ app.use(auth);
 
 app.use('/users', require('./routes/users'));
 app.use('/movies', require('./routes/movies'));
+
+app.use(errorLogger);
 
 app.use(errors());
 
