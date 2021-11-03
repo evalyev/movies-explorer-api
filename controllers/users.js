@@ -17,12 +17,12 @@ module.exports.updateUser = (req, res, next) => {
     .then((user) => {
       if (!user || user._id.equals(req.user._id)) {
         User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
-          .then((thisUser) => checkQueryOfNull(thisUser, req, res))
-          .catch((err) => next(err));
       } else {
         next(new ConflictError('Error. Conflict request'));
       }
-    });
+    })
+    .then((thisUser) => checkQueryOfNull(thisUser, req, res))
+    .catch((err) => next(err));
 };
 
 module.exports.createUser = (req, res, next) => {
