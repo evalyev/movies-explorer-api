@@ -13,9 +13,14 @@ module.exports.getThisUser = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   const { name, email } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
-    .then((user) => checkQueryOfNull(user, req, res))
-    .catch((err) => next(err));
+  User.find({ email })
+    .then((user) => {
+      if (!user || user._id.equals(req.user._id)) {
+        User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
+          .then((thisUser) => checkQueryOfNull(thisUser, req, res))
+          .catch((err) => next(err));
+      }
+    });
 };
 
 module.exports.createUser = (req, res, next) => {

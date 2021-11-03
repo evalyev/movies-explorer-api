@@ -3,9 +3,9 @@ const { celebrate, Joi } = require('celebrate');
 const { getMyFilms, createFilm, removeFilm } = require('../controllers/movies');
 const { regexUrl } = require('../utils/constants');
 
-router.get('/', getMyFilms);
+router.get('/movies/', getMyFilms);
 
-router.post('/', celebrate({
+router.post('/movies/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -22,7 +22,7 @@ router.post('/', celebrate({
   }),
 }), createFilm);
 
-router.delete('/:movieId', celebrate({
+router.delete('/movies/:movieId', celebrate({
   params: Joi.object().keys({
     movieId: Joi.number().required(),
   }),
