@@ -14,7 +14,7 @@ module.exports.getThisUser = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   const { name, email } = req.body;
 
-  User.find({ email })
+  User.findOne({ email })
     .then((user) => {
       if (!user) {
         return User.findByIdAndUpdate(req.user._id, { name, email },
