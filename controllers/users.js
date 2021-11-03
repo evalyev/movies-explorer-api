@@ -19,6 +19,8 @@ module.exports.updateUser = (req, res, next) => {
         User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
           .then((thisUser) => checkQueryOfNull(thisUser, req, res))
           .catch((err) => next(err));
+      } else {
+        next(new ConflictError('Error. Conflict request'));
       }
     });
 };
