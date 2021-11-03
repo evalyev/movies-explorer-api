@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 const express = require('express');
-// eslint-disable-next-line no-unused-vars
-const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -34,13 +32,6 @@ app.use(cors(options));
 
 app.use(requestLogger);
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -48,6 +39,13 @@ app.post('/signup', celebrate({
     name: Joi.string().required().min(2).max(30),
   }),
 }), createUser);
+
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), login);
 
 app.use(auth);
 
