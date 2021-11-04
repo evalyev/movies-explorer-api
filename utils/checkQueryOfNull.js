@@ -7,7 +7,7 @@ module.exports.checkQueryOfNull = (data, req, res, next) => {
       return next(new NotFoundError('Not found.'));
     }
   } catch (err) {
-    if (data === null) {
+    if (!data) {
       return next(new NotFoundError('Not found.'));
     }
   }
