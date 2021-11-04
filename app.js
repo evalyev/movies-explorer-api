@@ -29,22 +29,13 @@ app.use(cors(options));
 
 app.use(requestLogger);
 
-app.use(require('./routes/auth'));
-
-app.use(auth);
-
-app.use(require('./routes/users'));
-app.use(require('./routes/movies'));
+app.use(require('./routes/index'));
 
 app.use(errorLogger);
 
 app.use(errors());
 
 app.use(checkErrors);
-
-app.use('*', (req, res) => {
-  res.status(404).send({ message: 'Not found' });
-});
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
