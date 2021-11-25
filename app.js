@@ -39,7 +39,7 @@ app.use(errors());
 app.use(checkErrors);
 
 // Слушаем 3000 порт
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
