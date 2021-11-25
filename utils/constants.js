@@ -10,14 +10,12 @@ const allowedCors = [
 ];
 
 const options = {
-  origin: '*',
-  // [
-  //   'http://bakaev.nomoredomains.rocks',
-  //   'https://bakaev.nomoredomains.rocks',
-  //   'http://localhost:3000',
-  //   'https://localhost:3000',
-  //   '*',
-  // ],
+  origin: [
+    'http://bakaev.nomoredomains.rocks',
+    'https://bakaev.nomoredomains.rocks',
+    'http://localhost:3000',
+    'https://localhost:3000',
+  ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
