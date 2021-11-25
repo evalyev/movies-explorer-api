@@ -39,7 +39,7 @@ module.exports.createFilm = (req, res, next) => {
 };
 
 module.exports.removeFilm = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findOne({ movieId: req.params.movieId })
     .then((movie) => {
       if (!movie) {
         return Promise.reject(new NotFoundError('Movie not found'));
@@ -47,7 +47,7 @@ module.exports.removeFilm = (req, res, next) => {
       if (!checkPermissionsMovie(movie, req.user)) {
         return Promise.reject(new ForbiddenError('Forbidden error'));
       }
-      return Movie.findByIdAndRemove(req.params.movieId);
+      return Movie.findOneAndRemove({ movieId: req.params.movieId });
     })
     .then((movie) => checkQueryOfNull(movie, req, res, next))
     .catch((err) => next(err));
