@@ -6,6 +6,7 @@ const allowedCors = [
   'https://bakaev.nomoredomains.rocks',
   'http://localhost:3000',
   'https://localhost:3000',
+  '*',
 ];
 
 const options = {
@@ -14,6 +15,7 @@ const options = {
     'https://bakaev.nomoredomains.rocks',
     'http://localhost:3000',
     'https://localhost:3000',
+    '*',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
