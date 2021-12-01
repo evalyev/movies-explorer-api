@@ -39,7 +39,9 @@ module.exports.createFilm = (req, res, next) => {
 };
 
 module.exports.removeFilm = (req, res, next) => {
-  Movie.findOne({ movieId: req.params.movieId })
+  const owner = req.user._id;
+
+  Movie.findOne({ movieId: req.params.movieId, owner })
     .then((movie) => {
       if (!movie) {
         return Promise.reject(new NotFoundError('Movie not found'));
@@ -47,7 +49,7 @@ module.exports.removeFilm = (req, res, next) => {
       if (!checkPermissionsMovie(movie, req.user)) {
         return Promise.reject(new ForbiddenError('Forbidden error'));
       }
-      return Movie.findOneAndRemove({ movieId: req.params.movieId });
+      return Movie.findOneAndRemove({ movieId: req.params.movieId, owner });
     })
     .then((movie) => checkQueryOfNull(movie, req, res, next))
     .catch((err) => next(err));
