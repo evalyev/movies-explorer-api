@@ -26,8 +26,6 @@ mongoose.connect(`mongodb://localhost:27017/${NODE_ENV === 'production' ? MONGOD
   console.log(`Ошибка: ${res.message}`);
 });
 
-mongoose.connection.moviesdb.dropDatabase();
-
 app.use(cors(options));
 
 app.use(requestLogger);
