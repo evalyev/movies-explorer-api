@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // подключаемся к серверу mongo
-mongoose.connect(`mongodb://localhost:27017/${NODE_ENV === 'production' ? MONGODB : 'moviesdb'}`, {
+mongoose.connect(`mongodb://localhost:27017/${NODE_ENV === 'production' ? MONGODB : 'filmsdb'}`, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('ПОДКЛЮЧИЛИСЬ К БД');
