@@ -7,7 +7,6 @@ const ForbiddenError = require('../errors/forbidden-err');
 
 module.exports.getMyFilms = (req, res, next) => {
   const owner = req.user._id;
-  Movie.deleteMany({});
 
   Movie.find({ owner })
     .then((movies) => checkQueryOfNull(movies, req, res, next))
